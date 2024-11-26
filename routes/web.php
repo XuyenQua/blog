@@ -33,21 +33,21 @@ Route::prefix('admin')
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
+        Route::get('{id}/show', [CategoryController::class, 'show'])->name('show');
+        Route::get('{id}/edit/', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('{id}/update/', [CategoryController::class, 'update'])->name('update');
     });
 
     Route::controller(PostController::class)
-    ->as('posts.')
-    ->prefix('posts')
+    ->as('post.')
+    ->prefix('post')
     ->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [PostController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [PostController::class, 'delete'])->name('delete');
+        Route::get('{id}/show', [CategoryController::class, 'show'])->name('show');
+        Route::get('{id}/edit/', [PostController::class, 'edit'])->name('edit');
+        Route::put('{id}/update/', [PostController::class, 'update'])->name('update');
     });
 });
 
