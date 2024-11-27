@@ -45,7 +45,7 @@ Route::prefix('admin')
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
-        Route::get('{id}/show', [CategoryController::class, 'show'])->name('show');
+        Route::get('{id}/show', [PostController::class, 'show'])->name('show');
         Route::get('{id}/edit/', [PostController::class, 'edit'])->name('edit');
         Route::put('{id}/update/', [PostController::class, 'update'])->name('update');
     });

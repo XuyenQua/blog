@@ -23,7 +23,9 @@
                     <tr>
                         <th>Id</th>
                         <th>image</th>
-                        <th>Name</th>
+                        <th>title</th>
+                        <th>category name</th>
+                        <th>publish</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -49,7 +51,7 @@
     <script>
         $('#dataTable').DataTable({
             ajax: {
-                url: '{{ route('api.admin.category.index') }}',
+                url: '{{ route('api.admin.post.index') }}',
                 dataSrc: 'data'
             },
             processing: true,
@@ -64,14 +66,26 @@
                     }
                 },
                 {
-                    data: 'name'
+                    data: 'title'
+                },
+                {
+                    data: 'category_name',
+                },
+                {
+                    data: 'is_published',
+                    render: function(data) {
+                        return data == 1 ? 'Publish' : 'Unpublish';
+                    },
+                    'order': [
+                        [4, 'asc']
+                    ],
                 },
                 {
                     data: 'id',
                     render: function(data) {
-                        return `<a href="{{ route('admin.category.index') }}/${data}/edit" class="btn btn-primary">Edit</a>
-                        <a href="{{ route('admin.category.index') }}/${data}/show" class="btn btn-info">Show</a>
-                        <button class="btn btn-danger" id="deleteCategory" data-id="${data}">Delete</button>`;
+                        return `<a href="{{ route('admin.post.index') }}/${data}/edit" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('admin.post.index') }}/${data}/show" class="btn btn-info">Show</a>
+                        <button class="btn btn-danger" id="deletePost" data-id="${data}">Delete</button>`;
                     },
                     orderable: false,
                     searchable: false,
@@ -99,7 +113,7 @@
     </script>
 
     <script>
-        $(document).on('click', '#deleteCategory', function() {
+        $(document).on('click', '#deletePost', function() {
             Swal.fire({
                 title: 'Bạn có chắc chắn muốn xóa không?',
                 icon: 'warning',
@@ -111,7 +125,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '{{ route('api.admin.category.delete', '') }}/' + $(this).data('id'),
+                        url: '{{ route('api.admin.post.delete', '') }}/' + $(this).data('id'),
                         type: 'DELETE',
                         success: function(res) {
                             $('#dataTable').DataTable().ajax.reload();

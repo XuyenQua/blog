@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('short_description',255);
             $table->string('slug')->unique();
             $table->string('image');
-            $table->text('content');
+            $table->longText('content');
             $table->integer('views')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();

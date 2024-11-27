@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    show Category
+    show Category : {{ $category->name }}
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row flex-between-center">
                         <div class="col-md">
-                            <h5 class="mb-2 mb-md-0">show category</h5>
+                            <h5 class="mb-2 mb-md-0">show category  {{ $category->name }}</h5>
                         </div>
                         <div class="col-auto">
                             <a href="{{ route('admin.category.index') }}" class="btn btn-outline-secondary me-2"

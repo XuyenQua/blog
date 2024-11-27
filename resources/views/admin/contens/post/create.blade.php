@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Create product
+    Create post
 @endsection
 
 @section('css-settings')
@@ -15,11 +15,12 @@
                 <div class="card-body">
                     <div class="row flex-between-center">
                         <div class="col-md">
-                            <h5 class="mb-2 mb-md-0">Add a product</h5>
+                            <h5 class="mb-2 mb-md-0">Add a post</h5>
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-outline-secondary me-2" role="button">Discard</button>
-                            <button class="btn btn-primary" role="button">Add product</button>
+                            <a class="btn btn-outline-secondary me-2" href="{{ route('admin.post.index') }}">List</a>
+                            {{-- <button class="btn btn-outline-secondary me-2" role="button">Discard</button> --}}
+                            <button class="btn btn-primary" type="submit">Add post</button>
                         </div>
                     </div>
                 </div>
@@ -35,11 +36,21 @@
                                 <div class="col-12 mb-3">
                                     <label class="form-label" for="title">Title:</label>
                                     <input class="form-control" id="title" name="title" type="text">
+                                    @error('title')
+                                        <div class="alert alert-danger mt-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label" for="short_description">short_description</label>
                                     <input class="form-control" id="short_description" name="short_description"
                                         type="text">
+                                    @error('short_description')
+                                        <div class="alert alert-danger mt-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb-3">
@@ -69,6 +80,11 @@
                                 <div class="col-12 mb-3">
                                     <label class="form-label" for="image">image</label>
                                     <input class="form-control" id="image" name="image" type="file">
+                                    @error('image')
+                                        <div class="alert alert-danger mt-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -85,9 +101,14 @@
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         @else
-                                            <option value=""></option>
+                                            Không có danh mục nào
                                         @endif
                                     </select>
+                                    @error('category_id')
+                                        <div class="alert alert-danger mt-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -96,20 +117,18 @@
                                 <h6 class="mb-0">published</h6>
                             </div>
                             <div class="card-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="published" id="flexRadioDefault1"
-                                        value="true">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        yes
-                                    </label>
+                                <div class="form-group">
+                                    <label for="is_published">Publish</label>
+                                    <select name="is_published" id="is_published" class="form-control">
+                                        <option value="1">Publish</option>
+                                        <option value="0" selected >Unpublish</option>
+                                    </select>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="published" id="flexRadioDefault2"
-                                        value="false" checked>
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        no
-                                    </label>
-                                </div>
+                                @error('is_published')
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
 
@@ -126,10 +145,30 @@
 @endsection
 
 @section('js-setting')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
     <script src="{{ asset('theme/admin/vendor/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#tiny',
+            license_key: 'gpl',
+            height: 2000,
         });
     </script>
 @endsection
