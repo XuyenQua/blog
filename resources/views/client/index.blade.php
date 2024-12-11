@@ -45,7 +45,8 @@
             <div class="row g-5">
                 <div class="col-lg-4">
                     <div class="post-entry-1 lg">
-                        <a href="single-post.html"><img src="{{ asset('storage/' . $postLast->image) }}"
+                        <a href="{{ route('client.post', ['slug' => $postLast->slug]) }}">
+                            <img src="{{ asset('storage/' . $postLast->image) }}"
                                 alt="" class="img-fluid"></a>
                         <div class="post-meta">
                             {{-- <span class="date">Culture</span> 
